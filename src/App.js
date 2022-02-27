@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { useSelector, useDispatch } from 'react-redux'
 
-function App() {
+import Navbar from './Navbar'
+
+import { increment, decrement, changeCount } from './redux/counter'
+
+const App = () => {
+
+  const count = useSelector(state => state.counter.value)
+  
+  const dispatch = useDispatch()
+
+  const Increment = () => {
+    dispatch( increment() )
+  }
+  
+  const Decrement = () => {
+    dispatch( decrement() )
+  }
+
+  const _changeCount = (value) => {
+    dispatch( changeCount(value) )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <div align="center">
+
+        <Navbar />
+
+        <div className="counter">
+          <h1 style={{marginBottom: 10}}>Count: <strong>{count}</strong></h1>
+
+          <button className="increment" onClick={Increment}>Increment</button>
+          <button className="decrement" onClick={Decrement}>Decrement</button>
+
+          <div className="custom-change" style={{marginTop: 10}}>
+            <input type="number" onChange={(e) => _changeCount(e.target.value)} value={count} />
+          </div>
+        </div>
+
+      </div>
+    </>
+  )
 }
 
-export default App;
+export default App
